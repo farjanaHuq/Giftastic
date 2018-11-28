@@ -12,11 +12,12 @@
 <body>
   <div class="container">
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-3 col-md-offset-4" id = "inputSearch" >
         <div class="card">
           <div class="card-header">
-            Input your search here!
+            <strong> Input your search here! </strong> 
           </div>
+          <br>
           <div class="card-body">
             <form>
               <input class="form-control" type="text" id="search" placeholder="Search..."></input>
@@ -26,16 +27,21 @@
         </div>
       </div>
 
-      <div class="col-md-9" id="showResult">
+      <div class="col-md-9 col-md-offset-4" id="showResult" style="border: 1px solid lightcoral">
         <div class="card">
           <div class="card-header">
             Results:
           </div>
           <div class="card-body">
-            <div class="row">
-              <div id="col-0" class="col-md-4"></div>
-              <div id="col-1" class="col-md-4"></div>
-              <div id="col-2" class="col-md-4"></div>
+            <div class="row" >   
+              <div id="row0">
+                <div id = "text"> rating : <span id = "rating" > </span></div>
+                <div id="col-0" class="col-md-4" style="margin-right: 10px"></div>
+                <br>
+                <div id="col-1" class="col-md-4" style="margin-right: 10px"></div>
+                <br>
+                <div id="col-2" class="col-md-4" style="margin-right: 10px"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -61,12 +67,17 @@
         $("#col-0").empty();
         $("#col-1").empty();
         $("#col-2").empty();
+
+        for (var i = 0; i <= 9; i++) {
+          var colIndex = i % 3;
+          for(var j = 0; j<3; j++){
+            $("#rating").append(response.data[i].rating[j]);
+          }
+          $("#col-" + colIndex).append("<img class = 'img-fluid' src = ' " + response.data[i].images.fixed_height.url + " '>");
        
-          for (var i = 0; i <= 9; i++) {
-            var colIndex = i%3;
-            $("#col-" + colIndex).append("<img class = 'img-fluid' src = ' " + response.data[i].images.fixed_height.url + " '>");
-            // console.log(response.data[i]);
-            // console.log(response.data[i].title);
+         
+          console.log(response.data[i]);
+          // console.log(response.data[i].title);
         }
       });
     });
