@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>GifTastic</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-header">
+            Input your search here!
+          </div>
+          <div class="card-body">
+            <form>
+              <input class="form-control" type="text" id="search" placeholder="Search..."></input>
+              <button class="form-control" id="submit">submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-9" id="showResult">
+        <div class="card">
+          <div class="card-header">
+            Results:
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div id="col-0" class="col-md-4"></div>
+              <div id="col-1" class="col-md-4"></div>
+              <div id="col-2" class="col-md-4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    //create an empty array to push all the buttons to create
+    //
+    $("#submit").on("click", function (e) {
+      e.preventDefault();
+      var input = $("#search").val();
+      console.log(input);
+      var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + input + "&api_key=Td4vzREgP7eMrMjXa2UVC0jd2FUaDkRw";
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      }).then(function (response) {
+
+        $("#col-0").empty();
+        $("#col-1").empty();
+        $("#col-2").empty();
+       
+          for (var i = 0; i <= 9; i++) {
+            var colIndex = i%3;
+            $("#col-" + colIndex).append("<img class = 'img-fluid' src = ' " + response.data[i].images.fixed_height.url + " '>");
+            // console.log(response.data[i]);
+            // console.log(response.data[i].title);
+        }
+      });
+    });
+
+
+  </script>
+</body>
+
+</html>
