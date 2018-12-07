@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>GifTastic</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-md-offset-4" id="inputSearch">
+        <div class="card">
+          <div class="card-header">
+            <strong> Write your animal name here: </strong>
+          </div>
+          <br>
+          <div class="card-body">
+            <form>
+              <input class="form-control" type="text" id="animal-input" placeholder="Search..."></input>
+              <button class="form-control" id="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9 col-md-offset-4" id="showResult">
+        <div class="card">
+          <div class="card-header">
+            <strong> Search Results: </strong>
+            <div id="buttons-view"> </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div id="col-0" class="col-md-4" style="margin-right: 10px"></div>
+              <div id="col-1" class="col-md-4" style="margin-right: 10px"></div>
+              <div id="col-2" class="col-md-4" style="margin-right: 10px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- Script -->
+  <script type="text/javascript" src="./assets/javascript/giftastic.js"></script>
+</body>
+
+</html>

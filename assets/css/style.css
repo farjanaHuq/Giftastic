@@ -3,7 +3,7 @@
     height: 1024px;
     border: 1px solid black;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     color: black;
 }
 #showResult{
@@ -17,11 +17,12 @@
     float:right;
 }
 #search{
-    width: 30%;
-    height: 30px;
+    width: 38%;
+    height: 40px;
     border: 1px solid black;
-    margin-right: 15px;
+    margin-right: 10%;
 }
+
 #submit{
     width: 20%;
     height: 30px;
@@ -29,7 +30,18 @@
     border-radius: 5px;
     background-color: teal;
     color: aliceblue;
+    font-weight: bold;
 
+}
+#button-input{
+    width: 11%;
+    height: 26px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background-color: teal;
+    color: aliceblue;
+    font-weight: bold;
+    margin: 1%;
 }
 /* .form-control{
     margin: 10%;
