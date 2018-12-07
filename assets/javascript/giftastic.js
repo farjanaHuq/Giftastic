@@ -1,6 +1,6 @@
 $(document).ready(function () {
   
-    var animalNames = ["dog", "cat", "horse", "robin", "peacock", "pigeon"];
+    var animalNames = [];
 
     // Function for displaying animal data
     var renderButtons = function (animalNames) {
@@ -19,6 +19,20 @@ $(document).ready(function () {
             $("#buttons-view").append(button);
         }
     }
+    
+    var appendGifToFavourite = function(){
+        console.log("Here is your fav gif!");
+        console.log(favGifArray);
+    }
+    //Onclick event for add favourite button
+    $(document).on("click", ".add-favourite", function(e){
+        // e.preventDefault();
+        console.log("add me");
+        appendGifToFavourite();
+    
+    //    $("#display-fav-gif").append($("<button id = 'my-favourite-gif'> Favourite Gif </button>"));
+    });
+
     $("#submit").on("click", function (event) {
         event.preventDefault();
 
@@ -30,9 +44,8 @@ $(document).ready(function () {
             animalNames.push(myAnimal);
             $("#buttons-view").empty();
             renderButtons(animalNames);
-           // localStorage.setItem("animal-names", JSON.stringify(animalNames));
+            localStorage.setItem("animal-names", JSON.stringify(animalNames));
         }
-       
         // Calls renderButtons which handles the processing of 'animalNames' array
         $("#animal-input").val("");
     });
@@ -48,24 +61,25 @@ $(document).ready(function () {
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-
+            favGifArray = response.data.images.fixed_height.url;
             $("#col-0").empty();
             $("#col-1").empty();
             $("#col-2").empty();
-
+            
             for (var i = 0; i <= response.data.length; i++) {
                 var colIndex = i % 3;
                 
                 $("#col-" + colIndex).append($("<div> Rating : " + response.data[i].rating + "</div>"));
                 $("#col-" + colIndex).append("<div><img class = 'img-fluid' src = ' "
-                    + response.data[i].images.fixed_height.url + " '/><div>");
+                    + response.data[i].images.fixed_height.url + " '/> <div>");
+                $("#col-" + colIndex).append($("<button class = 'add-favourite'> Add Favourite </button>"));
             }
             localStorage.clear();
             localStorage.setItem("animal-names", JSON.stringify(animalNames));
         });
     });
-
-  // animalNames = JSON.parse(localStorage.getItem("animal-names")) || ["dog", "cat", "horse", "robin", "peacock", "pigeon"];
+    
+    animalNames = JSON.parse(localStorage.getItem("animal-names")) || ["dog", "cat", "horse", "robin", "peacock", "pigeon"];
     renderButtons(animalNames);
   
 });
