@@ -3,28 +3,19 @@
     height: 1024px;
     /* border: 1px solid black; */
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 18px;
+    font-size: 14px;
     color: black;
-}
-#showResult{
-    width: 63%;
-    height: 1024px;
-    float: left;
-}
-#inputSearch{
-    width: 35%;
-    height: 100px;
-    float:right;
+
 }
 #search{
-    width: 38%;
+    /* width: 38%; */
     height: 40px;
     border: 1px solid black;
     margin-right: 10%;
 }
 
-#submit,.add-favourite, #my-favourite-gif{
-    width: 21%;
+.add-favourite{
+    width: 50%;
     height: 30px;
     border: 1px solid transparent;
     border-radius: 5px;
@@ -33,7 +24,6 @@
     font-size: 14px;
     font-weight: bold;
     text-align: center;
-
 }
 #button-input{
     width: 12%;
@@ -45,8 +35,4 @@
     font-weight: bold;
     margin: 1%;
 }
-/* .form-control{
-    margin: 10%;
-    height: 50px;
-    width: 100px;
-} */
+

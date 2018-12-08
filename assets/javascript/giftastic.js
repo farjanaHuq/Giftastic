@@ -1,6 +1,7 @@
 $(document).ready(function () {
-  
+
     var animalNames = [];
+    var favGifArray = [];
 
     // Function for displaying animal data
     var renderButtons = function (animalNames) {
@@ -19,19 +20,6 @@ $(document).ready(function () {
             $("#buttons-view").append(button);
         }
     }
-    
-    var appendGifToFavourite = function(){
-        console.log("Here is your fav gif!");
-        console.log(favGifArray);
-    }
-    //Onclick event for add favourite button
-    $(document).on("click", ".add-favourite", function(e){
-        // e.preventDefault();
-        console.log("add me");
-        appendGifToFavourite();
-    
-    //    $("#display-fav-gif").append($("<button id = 'my-favourite-gif'> Favourite Gif </button>"));
-    });
 
     $("#submit").on("click", function (event) {
         event.preventDefault();
@@ -40,7 +28,7 @@ $(document).ready(function () {
         var myAnimal = $("#animal-input").val().trim().toLowerCase();
 
         // The animal name  from the textbox is then added to the 'animalNames' array
-        if ((animalNames.indexOf(myAnimal) === -1) && (myAnimal !== "")){
+        if ((animalNames.indexOf(myAnimal) === -1) && (myAnimal !== "")) {
             animalNames.push(myAnimal);
             $("#buttons-view").empty();
             renderButtons(animalNames);
@@ -61,25 +49,76 @@ $(document).ready(function () {
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-            favGifArray = response.data.images.fixed_height.url;
+            console.log(response);
             $("#col-0").empty();
             $("#col-1").empty();
             $("#col-2").empty();
-            
+
+          
             for (var i = 0; i <= response.data.length; i++) {
                 var colIndex = i % 3;
-                
+                var buttonId = 'favGif-' + i;
+
                 $("#col-" + colIndex).append($("<div> Rating : " + response.data[i].rating + "</div>"));
-                $("#col-" + colIndex).append("<div><img class = 'img-fluid' src = ' "
-                    + response.data[i].images.fixed_height.url + " '/> <div>");
-                $("#col-" + colIndex).append($("<button class = 'add-favourite'> Add Favourite </button>"));
+                $("#col-" + colIndex).append($("<div><img class = 'img-fluid' src = ' "
+                    + response.data[i].images.fixed_height.url + " '/> <div>"));
+                $("#col-" + colIndex).append($("<button class ='add-favourite' id = '"+buttonId+"'> Add Favourite </button>"));
+
+                $("#"+buttonId+"").on('click', function() {
+
+                    var id = $(this).attr('id');
+                    var splittedString = id.split('-');
+                    var seq = splittedString[1];
+                    var favGifId = response.data[seq].id;
+                    var j = favGifArray.findIndex(j=> j.id === favGifId); 
+ 
+                  console.log(response);
+                  if(favGifArray === null){
+                    favGifArray = [];
+                  }
+                  else if(j === -1){
+
+                   $("#fav-gif").append($("<div id = 'Gif-"+favGifId+"'><img class = 'img-fluid ' id = 'favGif' src = ' " + response.data[seq].images.fixed_height.url+ " '/></div>"));
+                   favGifArray.push(response.data[seq]); 
+
+                   //creating a remove button to a new div.
+                   $("#fav-gif").append("<div><button class = 'btn remove-button' 'data-id = "+favGifId+"'> Remove Gif </button></div>");
+                   
+                   $(".remove-button").on("click", function(e){
+                            var gifId = $(this).attr("data-id");
+                            $(`#Gif-${gifId}`).remove();
+                            $(this).remove();
+                            j = favGifArray.findIndex(j=> j.id === gifId);
+                            favGifArray.splice(j,1);
+                   });
+
+                 }
+                
+                $("#favGif").css({
+                    'width' : `${120}px`,
+                    'height' : `${100}px`
+                }) ;
+                $(".remove-button").css({
+                    'heigth' : `${30}px`,
+                    'margin-top': `${1}%`,
+                    'background-color' : 'teal',
+                    'color' : 'aliceblue'
+                }) ;
+              
+              
+                console.log(response.data[seq].id);
+                console.log(favGifArray);
+                });
+               
             }
+           
             localStorage.clear();
+            localStorage.setItem("favourite-giffs", JSON.stringify(favGifArray));
             localStorage.setItem("animal-names", JSON.stringify(animalNames));
         });
     });
-    
+    //favGifArray = JSON.parse(localStorage.getItem("favourite-giffs"))
     animalNames = JSON.parse(localStorage.getItem("animal-names")) || ["dog", "cat", "horse", "robin", "peacock", "pigeon"];
     renderButtons(animalNames);
-  
+    
 });

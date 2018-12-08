@@ -7,54 +7,57 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>GifTastic</title>
   <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/reset.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+         rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+                             crossorigin="anonymous">
 </head>
 
 <body>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3 col-md-offset-4" id="inputSearch">
-        <div class="card">
-          <div class="card-header">
-            <strong> Write your animal name here: </strong>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-3" id = "inputSearch">
+            <div class="card">
+              <div class="card-header">
+                <strong>Input your search here!</strong>
+              </div>
+              <div class="card-body">
+                <form>
+                  <input class="form-control" type="text" id="animal-input" placeholder= "Your animal.."></input>
+                  <button class="form-control" id="submit" style="background-color:teal; color: white">submit</button>
+                </form>
+                <div>
+                    <strong> Favourite Giffy</strong>
+                    <p id=fav-gif></p>
+                    <!-- <div><button id='my-favourite-gif' style="width:55%"> Hide Favourite</button></div> -->
+                  </div>
+              </div>
+            </div>
           </div>
-          <br>
-          <div class="card-body">
-            <form>
-              <input class="form-control" type="text" id="animal-input" placeholder="Search..."></input>
-              <button class="form-control" id="submit">Submit</button>
-            </form>
-            <div style="margin-top: 1%" id = "display-fav-gif">
-              <strong> Favourite Giffy</strong>
-
-              <div><button id = 'my-favourite-gif' style="width:55%"> Hide Favourite</button></div>
+    
+          <div class="col-md-9" id="showResult">
+            <div class="card">
+              <div class="card-header">
+                <strong> Search Results: </strong>
+                <div id="buttons-view"> </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div id="col-0" class="col-md-4"></div>
+                  <div id="col-1" class="col-md-4"></div>
+                  <div id="col-2" class="col-md-4"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-9 col-md-offset-4" id="showResult">
-        <div class="card">
-          <div class="card-header">
-            <strong> Search Results: </strong>
-            <div id="buttons-view"> </div>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div id="col-0" class="col-md-4" style="margin-right: 10px"></div>
-              <div id="col-1" class="col-md-4" style="margin-right: 10px"></div>
-              <div id="col-2" class="col-md-4" style="margin-right: 10px"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-   
-
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <!-- Script -->
-  <script type="text/javascript" src="./assets/javascript/giftastic.js"></script>
+    
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Script -->
+    <script type="text/javascript" src="./assets/javascript/giftastic.js"></script>
 </body>
 
 </html>
