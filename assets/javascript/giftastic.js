@@ -59,12 +59,11 @@ $(document).ready(function () {
             for (var i = 0; i <= response.data.length; i++) {
                 var colIndex = i % 3;
                 var buttonId = 'favGif-' + i;
-                var animateSrc = response.data[i].images.fixed_height.url;
-                var stillSrc =   response.data[i].images.fixed_height_still.url;
-                var clicked = false;
-
+                var gifId  = 'gif-'+i;
+                
+    
                 $("#col-" + colIndex).append($("<div> Rating : " + response.data[i].rating + "</div>"));
-                $("#col-" + colIndex).append($("<div><img class = 'img-fluid  gif' src = ' "
+                $("#col-" + colIndex).append($("<div><img class = 'img-fluid  gif' id = '"+gifId+"' src = ' "
                     + response.data[i].images.fixed_height.url + " '/> <div>"));
                 $("#col-" + colIndex).append($("<button class ='add-favourite' id = '"+buttonId+"'> Add Favourite </button>"));
                 
@@ -122,8 +121,14 @@ $(document).ready(function () {
                 });
 
                 // Event listener function to pause the gifs
-                $(".gif").on("click", function () {
+                $("#"+gifId+"").on("click", function () {
                     
+                    var id = $(this).attr('id');
+                    var splittedString = id.split('-');
+                    var seq = splittedString[1];
+
+                    var animateSrc = response.data[seq].images.fixed_height.url;
+                    var stillSrc =   response.data[seq].images.fixed_height_still.url;
                     var state = $(this).attr("data-state");
 
                     if (state === "still") {
@@ -138,12 +143,7 @@ $(document).ready(function () {
                             src: stillSrc
                         })
                     }
-                    // if(!clicked){
-                    //     $(this).attr("src", stillSrc);
-                    // }
-                    // else{
-                    //     $(this).attr("src", animateSrc);
-                    // }
+                
                 });
                
             }
