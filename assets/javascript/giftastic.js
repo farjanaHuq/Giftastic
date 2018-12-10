@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+    //Global arrays
     var animalNames = [];
     var favGifArray = [];
 
@@ -20,7 +21,9 @@ $(document).ready(function () {
             $("#buttons-view").append(button);
         }
     }
+   
 
+    //Event listener for submit button
     $("#submit").on("click", function (event) {
         event.preventDefault();
 
@@ -34,11 +37,9 @@ $(document).ready(function () {
             renderButtons(animalNames);
             localStorage.setItem("animal-names", JSON.stringify(animalNames));
         }
-        // Calls renderButtons which handles the processing of 'animalNames' array
         $("#animal-input").val("");
     });
-
-    // Calls the renderButtons function to display the intial buttons
+ 
     $(document.body).on("click", ".animal", function (e) {
 
         e.preventDefault();
@@ -53,47 +54,57 @@ $(document).ready(function () {
             $("#col-0").empty();
             $("#col-1").empty();
             $("#col-2").empty();
-
-          
+            
+            
             for (var i = 0; i <= response.data.length; i++) {
                 var colIndex = i % 3;
                 var buttonId = 'favGif-' + i;
+                var animateSrc = response.data[i].images.fixed_height.url;
+                var stillSrc =   response.data[i].images.fixed_height_still.url;
+                var clicked = false;
 
                 $("#col-" + colIndex).append($("<div> Rating : " + response.data[i].rating + "</div>"));
-                $("#col-" + colIndex).append($("<div><img class = 'img-fluid' src = ' "
+                $("#col-" + colIndex).append($("<div><img class = 'img-fluid  gif' src = ' "
                     + response.data[i].images.fixed_height.url + " '/> <div>"));
                 $("#col-" + colIndex).append($("<button class ='add-favourite' id = '"+buttonId+"'> Add Favourite </button>"));
-
+                
+                
+                //Event listener for add favourite button
                 $("#"+buttonId+"").on('click', function() {
-
+    
                     var id = $(this).attr('id');
                     var splittedString = id.split('-');
                     var seq = splittedString[1];
                     var favGifId = response.data[seq].id;
                     var j = favGifArray.findIndex(j=> j.id === favGifId); 
- 
-                  console.log(response);
+
+                  // if statement to initialize favGif Array to its initial state (with no elements in the array)
                   if(favGifArray === null){
                     favGifArray = [];
                   }
+                  // this else if statement prevents from adding same gif to favGifArray
                   else if(j === -1){
-
-                   $("#fav-gif").append($("<div id = 'Gif-"+favGifId+"'><img class = 'img-fluid ' id = 'favGif' src = ' " + response.data[seq].images.fixed_height.url+ " '/></div>"));
+                   
+                   //appends favourite gif to a new div
+                   $("#fav-gif").append($("<div id = 'Gif-"+favGifId+"'><img class = 'img-fluid gif' id = 'favGif' src = ' " + response.data[seq].images.fixed_height.url+ " '/></div>"));
+                   
+                   //adding new element (favourite gif) to the favGifArray
                    favGifArray.push(response.data[seq]); 
 
                    //creating a remove button to a new div.
                    $("#fav-gif").append("<div><button class = 'btn remove-button' 'data-id = "+favGifId+"'> Remove Gif </button></div>");
                    
+                   //Event listener to remove favourite gif
                    $(".remove-button").on("click", function(e){
                             var gifId = $(this).attr("data-id");
-                            $(`#Gif-${gifId}`).remove();
+                            $(`#Gif-${favGifId}`).remove();
                             $(this).remove();
-                            j = favGifArray.findIndex(j=> j.id === gifId);
+                            j = favGifArray.findIndex(j => j.id === gifId);
                             favGifArray.splice(j,1);
                    });
-
+               
                  }
-                
+                //css styling for favourite gif section
                 $("#favGif").css({
                     'width' : `${120}px`,
                     'height' : `${100}px`
@@ -105,20 +116,45 @@ $(document).ready(function () {
                     'color' : 'aliceblue'
                 }) ;
               
-              
                 console.log(response.data[seq].id);
                 console.log(favGifArray);
+                localStorage.setItem("favourite-giffs", JSON.stringify(favGifArray));
+                });
+
+                // Event listener function to pause the gifs
+                $(".gif").on("click", function () {
+                    
+                    var state = $(this).attr("data-state");
+
+                    if (state === "still") {
+
+                        $(this).attr({
+                            "data-state": "animate",
+                            src: animateSrc
+                        })
+                    } else {
+                        $(this).attr({
+                            "data-state": "still",
+                            src: stillSrc
+                        })
+                    }
+                    // if(!clicked){
+                    //     $(this).attr("src", stillSrc);
+                    // }
+                    // else{
+                    //     $(this).attr("src", animateSrc);
+                    // }
                 });
                
             }
            
-            localStorage.clear();
-            localStorage.setItem("favourite-giffs", JSON.stringify(favGifArray));
+            localStorage.clear();     
             localStorage.setItem("animal-names", JSON.stringify(animalNames));
         });
     });
-    //favGifArray = JSON.parse(localStorage.getItem("favourite-giffs"))
+    // favGifArray = JSON.parse(localStorage.getItem("favourite-giffs"));
     animalNames = JSON.parse(localStorage.getItem("animal-names")) || ["dog", "cat", "horse", "robin", "peacock", "pigeon"];
     renderButtons(animalNames);
-    
+   console.log(favGifArray);
+ 
 });
