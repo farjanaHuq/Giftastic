@@ -44,7 +44,7 @@ $(document).ready(function () {
 
         e.preventDefault();
         var animalName = $(this).attr("data-name");
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + animalName + "&api_key=Td4vzREgP7eMrMjXa2UVC0jd2FUaDkRw";
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animalName + "&api_key=Td4vzREgP7eMrMjXa2UVC0jd2FUaDkRw";
 
         $.ajax({
             url: queryURL,
