@@ -1,5 +1,5 @@
 # Giftastic
-AJAX HomeWork
+
 
 How it works:
 #The giffy app generates giffy buttons:
